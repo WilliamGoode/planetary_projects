@@ -6,6 +6,9 @@ __pycache__/
 # C extensions
 *.so
 
+# Spice
+spice_kernels/
+
 # Distribution / packaging
 .Python
 build/

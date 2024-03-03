@@ -1,0 +1,18 @@
+\begintext
+
+Meta kernel for loading spice kernels needed for testing the spice module
+
+\begindata
+
+PATH_VALUES  = ( 'spice_kernels/')
+
+PATH_SYMBOLS = ( 'SPICE' )
+
+KERNELS_TO_LOAD = (
+'$SPICE/naif0012.tls',
+'$SPICE/de438.bsp',
+'$SPICE/de421.bsp',
+'$SPICE/pck00010.tpc',
+)
+
+\begintext

@@ -2,6 +2,7 @@ import spiceypy as spice
 import numpy as np
 import matplotlib.pyplot as plt
 from orbital import planetPlot
+import orbital
 
 print('Sky object positions development test...')
 
@@ -21,11 +22,11 @@ AU = 1.4959787e8 # [km]
 day = 86400 # [s]
 moon_sma = 384399 # [km]
 
-date_utc = '2024 March 2, 14:00:00 UTC' 
+date_utc = '2024 March 17, 21:03:00 UTC' 
 date_et = spice.str2et(date_utc)
 print('ET: ', date_et)
 
-et_array = np.linspace(date_et, date_et+27*day, 500)
+et_array = np.linspace(date_et, date_et+1*day, 100)
 
 moon_states = spice.spkpos('MOON', et_array, 'ECLIPJ2000', 'none', 'EARTH')
 # print(moon_states)
@@ -43,9 +44,25 @@ lat_test = 39.5*(np.pi/180) # [rad]
 lon_test = -104.7*(np.pi/180) # [rad]
 alt_test = 1828e-3 # [km]
 
+moon_pos_ecef_test = moon_pos_ecef[1,:]
+
 obs_pos_ecef = spice.georec(lon_test, lat_test, alt_test, re, f)
+los_ecef = moon_pos_ecef_test - obs_pos_ecef
+
+pos_enu = orbital.C_ecef2enu(lat_test, lon_test)@los_ecef
+print('Moon position in ENU:',pos_enu)
+az, el = orbital.AZEL(pos_enu)
+print('Az (deg):', az*180/np.pi)
+print('El (deg):', el*180/np.pi)
 
 
+fig = plt.figure()
+ax = fig.add_subplot(polar=True)
+ax.scatter(az, el*180/np.pi, c='red', s=50)
+ax.set_theta_zero_location("N")  # theta=0 at the top
+ax.set_theta_direction(-1)  # theta increasing clockwise
+ax.set_rlim(bottom=90, top=0)
+plt.show()
 
 # plt.figure()
 # plt.plot(moon_pos[:,0], moon_pos[:,1], label='Moon Position')
@@ -82,4 +99,4 @@ limit = 1.0*moon_sma
 ax.axes.set_xlim3d(left=-limit, right=limit) 
 ax.axes.set_ylim3d(bottom=-limit, top=limit) 
 ax.axes.set_zlim3d(bottom=-limit, top=limit)
-plt.show()
+# plt.show()

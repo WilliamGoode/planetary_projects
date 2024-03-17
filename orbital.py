@@ -39,6 +39,18 @@ def rot3(alpha):
                      [-np.sin(alpha), np.cos(alpha), 0.], 
                      [0., 0., 1.]])
 
+def C_ecef2enu(lat,lon):
+    return np.array([[-np.sin(lon), np.cos(lon), 0],
+                     [-np.cos(lon)*np.sin(lat), -np.sin(lon)*np.sin(lat), np.cos(lat)],
+                     [np.cos(lon)*np.cos(lat), np.sin(lon)*np.cos(lat), np.sin(lat)]])
+
+def AZEL(pos_enu):
+    az = np.arctan2(pos_enu[0],pos_enu[1])
+    if az < 0:
+        az = az + 2*np.pi
+    el = np.arcsin(pos_enu[2]/np.linalg.norm(pos_enu))
+    return az, el
+
 def gregorian_to_julian(year, month, day):
     i = int((month - 14) / 12)
     jd = day - 32075

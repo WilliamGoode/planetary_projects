@@ -62,7 +62,7 @@ ax.scatter(az, el*180/np.pi, c='red', s=50)
 ax.set_theta_zero_location("N")  # theta=0 at the top
 ax.set_theta_direction(-1)  # theta increasing clockwise
 ax.set_rlim(bottom=90, top=0)
-plt.show()
+# plt.show()
 
 # plt.figure()
 # plt.plot(moon_pos[:,0], moon_pos[:,1], label='Moon Position')
@@ -99,4 +99,4 @@ limit = 1.0*moon_sma
 ax.axes.set_xlim3d(left=-limit, right=limit) 
 ax.axes.set_ylim3d(bottom=-limit, top=limit) 
 ax.axes.set_zlim3d(bottom=-limit, top=limit)
-# plt.show()
+plt.show()
